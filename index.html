@@ -348,6 +348,44 @@ table tr:nth-child(even) td{background:#f5faf5}
 .cart-item>div[style*="text-align:right"]{min-width:60px!important;}
 .cart-item>.btn-danger{flex-shrink:0;}
 </style>
+<style id="siap-app-toast-style">
+#siap-app-toast-wrap{position:fixed;top:18px;right:18px;z-index:999999;display:flex;flex-direction:column;gap:10px;pointer-events:none;max-width:min(92vw,420px)}
+.siap-app-toast{display:flex;align-items:flex-start;gap:10px;background:#fff;color:#334155;border:1px solid #e2e8f0;border-radius:14px;padding:12px 15px;box-shadow:0 12px 30px rgba(15,23,42,.16);font:600 14px/1.45 system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;opacity:0;transform:translateY(-8px);transition:opacity .2s ease,transform .2s ease;pointer-events:auto}
+.siap-app-toast.show{opacity:1;transform:translateY(0)}
+.siap-app-toast.success .siap-toast-icon{color:#059669}.siap-app-toast.error .siap-toast-icon{color:#dc2626}.siap-app-toast.warning .siap-toast-icon{color:#d97706}
+.siap-toast-icon{font-size:20px;line-height:1;flex:none;margin-top:1px}.siap-toast-text{white-space:pre-wrap;word-break:break-word}
+@media(max-width:640px){#siap-app-toast-wrap{top:12px;right:12px;left:12px;max-width:none}.siap-app-toast{width:100%}}
+</style>
+<script id="siap-app-alert-override">
+(function(){
+  function cleanToastMessage(msg){
+    return String(msg==null?'':msg).replace(/^[\\s]*(?:[✅❌⚠️✔✖❗⛔🔔])\\s*/u,'').trim();
+  }
+  function toastType(msg){
+    var raw=String(msg==null?'':msg);
+    if(/(?:❌|gagal|error|failed)/i.test(raw)) return 'error';
+    if(/(?:⚠️|peringatan|warning)/i.test(raw)) return 'warning';
+    return 'success';
+  }
+  window.showAppToast=function(msg,type){
+    try{
+      var wrap=document.getElementById('siap-app-toast-wrap');
+      if(!wrap){wrap=document.createElement('div');wrap.id='siap-app-toast-wrap';document.body.appendChild(wrap)}
+      var kind=type||toastType(msg),el=document.createElement('div');el.className='siap-app-toast '+kind;
+      var icon=kind==='error'?'✕':kind==='warning'?'⚠':'✓';
+      el.innerHTML='<span class="siap-toast-icon">'+icon+'</span><span class="siap-toast-text"></span>';
+      el.querySelector('.siap-toast-text').textContent=cleanToastMessage(msg)||'Selesai';
+      wrap.appendChild(el);requestAnimationFrame(function(){el.classList.add('show')});
+      var delay=kind==='error'?3600:2800;
+      setTimeout(function(){el.classList.remove('show');setTimeout(function(){el.remove()},220)},delay);
+    }catch(e){}
+  };
+  if(!window.__siapAppAlertOverridden){
+    window.__siapAppAlertOverridden=true;
+    window.alert=function(msg){window.showAppToast(msg)};
+  }
+})();
+</script>
 </head>
 <body>
 <div class="auth-container" id="authContainer">
