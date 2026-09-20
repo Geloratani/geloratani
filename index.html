@@ -704,6 +704,147 @@ button:not(.btn){box-shadow:0 2px 0 rgba(0,0,0,.14),0 3px 6px rgba(0,0,0,.07);}
 #networkOfflineOverlay .offline-foot{padding:12px 16px;text-align:center;background:#075b2f;color:#fff;font-size:11px;border-top:4px solid #f1c40f;}.offline-foot b{color:#ffd52a;}
 @media(max-width:480px){#networkOfflineOverlay{padding:10px;}#networkOfflineOverlay .offline-shell{border-radius:20px;max-height:calc(100vh - 20px);}#networkOfflineOverlay .offline-head{padding:15px 12px 13px;}.offline-brand{font-size:19px!important;}#networkOfflineOverlay .offline-body{padding:22px 14px 20px;}#networkOfflineOverlay .offline-icon{width:94px;height:94px;font-size:46px;}#networkOfflineOverlay h2{font-size:21px;}.offline-message{font-size:15px;}}
 </style>
+
+<style id="desktop-sidebar-toggle-fix-20260920">
+/* DESKTOP/LAPTOP SIDEBAR TOGGLE: hidden after menu selection, hamburger reopens. */
+@media (min-width:481px){
+  #desktopSidebarToggle{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:38px!important;
+    height:38px!important;
+    margin-right:8px!important;
+    border:1px solid var(--border)!important;
+    border-radius:8px!important;
+    background:rgba(255,255,255,.92)!important;
+    color:var(--primary-dark)!important;
+    font-size:22px!important;
+    line-height:1!important;
+    cursor:pointer!important;
+    box-shadow:0 2px 8px rgba(0,0,0,.08)!important;
+  }
+  #desktopSidebarToggle:hover{background:#f2f8f3!important;}
+  #mainSidebar{
+    transition:width .18s ease, min-width .18s ease, flex-basis .18s ease, transform .18s ease!important;
+  }
+  #mainSidebar.desktop-sidebar-hidden{
+    width:0!important;
+    min-width:0!important;
+    max-width:0!important;
+    flex-basis:0!important;
+    padding-left:0!important;
+    padding-right:0!important;
+    border:0!important;
+    overflow:hidden!important;
+  }
+  #mainSidebar .desktop-sidebar-head{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:flex-end!important;
+    min-height:38px!important;
+    padding:2px 4px 5px!important;
+  }
+  #desktopSidebarClose{
+    display:inline-flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:32px!important;
+    height:32px!important;
+    border:0!important;
+    border-radius:7px!important;
+    background:transparent!important;
+    color:var(--text-light)!important;
+    font-size:20px!important;
+    line-height:1!important;
+    cursor:pointer!important;
+  }
+  #desktopSidebarClose:hover{background:#f2f2f2!important;color:#dc2626!important;}
+}
+@media (max-width:480px){
+  #desktopSidebarToggle,#desktopSidebarClose{display:none!important;}
+}
+</style>
+
+<style id="desktop-module-layout-fix-20260920">
+/* DESKTOP/LAPTOP FIX:
+   Sidebar sebelumnya memakai width:100% secara global.
+   Pada desktop ini membuat sidebar mengambil seluruh lebar app-body
+   sehingga area modul utama tidak mendapat ruang yang benar.
+   Mobile tetap memakai sidebar horizontal seperti sebelumnya. */
+@media (min-width:481px){
+  .app-body{
+    display:flex!important;
+    flex-direction:row!important;
+    align-items:stretch!important;
+    min-width:0!important;
+    min-height:0!important;
+    overflow:hidden!important;
+  }
+  .sidebar{
+    width:220px!important;
+    min-width:220px!important;
+    max-width:220px!important;
+    flex:0 0 220px!important;
+    height:calc(100dvh - 68px)!important;
+    max-height:calc(100dvh - 68px)!important;
+    box-sizing:border-box!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+    position:sticky!important;
+    top:68px!important;
+    align-self:flex-start!important;
+    padding:8px 6px!important;
+  }
+  .sidebar-menu{
+    display:flex!important;
+    flex-direction:column!important;
+    flex-wrap:nowrap!important;
+    min-width:0!important;
+    width:100%!important;
+    gap:3px!important;
+  }
+  .sidebar-menu li{
+    width:100%!important;
+    min-width:0!important;
+    flex:0 0 auto!important;
+  }
+  .sidebar-menu a{
+    width:100%!important;
+    min-width:0!important;
+    box-sizing:border-box!important;
+    flex-direction:row!important;
+    justify-content:flex-start!important;
+    text-align:left!important;
+    padding:9px 12px!important;
+    min-height:42px!important;
+    gap:8px!important;
+  }
+  .sidebar-menu a .icon{
+    width:28px!important;
+    min-width:28px!important;
+    text-align:center!important;
+    font-size:20px!important;
+  }
+  .sidebar-menu a .badge{
+    top:50%!important;
+    right:8px!important;
+    transform:translateY(-50%)!important;
+  }
+  .main-content{
+    flex:1 1 auto!important;
+    width:auto!important;
+    min-width:0!important;
+    max-width:none!important;
+    height:calc(100dvh - 68px)!important;
+    max-height:calc(100dvh - 68px)!important;
+    box-sizing:border-box!important;
+    overflow-x:hidden!important;
+    overflow-y:auto!important;
+  }
+}
+</style>
+
 </head>
 <body>
 <div class="auth-container" id="authContainer">
@@ -727,12 +868,12 @@ button:not(.btn){box-shadow:0 2px 0 rgba(0,0,0,.14),0 3px 6px rgba(0,0,0,.07);}
 <div class="modal-overlay" id="detailModal"><div class="modal-box" style="max-width:400px"><button class="modal-close" onclick="closeDetailModal()">✕</button><div class="modal-title">📦 Detail Produk</div><div id="detailBody"></div></div></div>
 <div class="modal-overlay" id="orderDetailModal"><div class="modal-box" style="max-width:600px"><button class="modal-close" onclick="closeOrderDetail()">✕</button><div class="modal-title" id="orderDetailTitle">📋 Detail Pesanan</div><div id="orderDetailBody"></div><div class="btn-group"><button class="btn btn-outline btn-sm" onclick="closeOrderDetail()">Tutup</button><button class="btn btn-primary btn-sm" id="orderDetailAction" onclick="orderDetailAction()" style="display:none">Aksi</button></div></div></div>
 <div class="app-container" id="appContainer">
-<header class="app-header" id="appHeader"><div class="header-top"><div class="header-left"><span class="brand" id="brandName"><span class="brand-icon" id="headerBrandIcon"><img alt="" id="headerBrandImg" src="" style="display:none"/></span><span id="headerStoreName">Marketplace</span></span></div>
+<header class="app-header" id="appHeader"><div class="header-top"><div class="header-left"><button id="desktopSidebarToggle" type="button" aria-label="Buka menu" title="Buka menu" onclick="toggleDesktopSidebar(true)" style="display:none">☰</button><span class="brand" id="brandName"><span class="brand-icon" id="headerBrandIcon"><img alt="" id="headerBrandImg" src="" style="display:none"/></span><span id="headerStoreName">Marketplace</span></span></div>
 <div class="header-center" id="searchContainer" style="display:none"><input class="header-search" id="headerSearch" oninput="searchProducts(this.value)" placeholder="🔍 Cari produk..." type="text"/></div>
 <div class="header-right"><span class="header-icon" id="notifIcon" onclick="showPage('notifikasi')" title="Notifikasi">🔔<span class="dot" id="notifDot"></span></span></div></div>
 <div class="header-bottom"><div class="header-stats" id="headerStats"></div></div></header>
 <div class="app-body">
-<nav class="sidebar" id="mainSidebar"><ul class="sidebar-menu" id="sidebarMenu"></ul></nav>
+<nav class="sidebar" id="mainSidebar"><div class="desktop-sidebar-head"><button id="desktopSidebarClose" type="button" aria-label="Tutup menu" title="Tutup menu" onclick="toggleDesktopSidebar(false)" style="display:none">✕</button></div><ul class="sidebar-menu" id="sidebarMenu"></ul></nav>
 <main class="main-content">
 <div class="page" id="page-pekerjaan"><div class="work-center-hero card"><div class="work-center-kicker">⚡ PUSAT PEKERJAAN</div><div class="work-center-title" id="workCenterTitle">Selamat datang</div><div class="work-center-subtitle" id="workCenterSubtitle">Berikut pekerjaan yang perlu Anda lakukan sekarang.</div></div><div class="card work-center-card"><div class="card-header"><h3>⚡ Pekerjaan yang Perlu Dilakukan</h3><button class="btn btn-outline btn-sm" onclick="loadWorkCenter()">🔄 Refresh</button></div><div id="workCenterTasks"></div></div><div class="card work-center-card"><div class="card-header"><h3>🔄 Sedang Berjalan</h3></div><div id="workCenterRunning"></div></div><div class="card work-center-card"><div class="card-header"><h3>🏢 Kemampuan Sistem</h3><span class="card-action">Semua modul tetap tersedia di menu</span></div><div class="work-system-grid"><button class="work-system-item" onclick="showPage('products')">🛒<span>Marketplace</span><small>Pesanan & katalog</small></button><button class="work-system-item" onclick="showPage('eceran')">🏪<span>POS / Eceran</span><small>Penjualan toko</small></button><button class="work-system-item" onclick="showPage('stock')">📦<span>Inventory</span><small>Stok & mutasi</small></button><button class="work-system-item" onclick="showPage('belanja')">🧾<span>Purchasing</span><small>PO & supplier</small></button><button class="work-system-item" onclick="showPage('pengiriman')">🚚<span>Delivery</span><small>Pengiriman & kurir</small></button><button class="work-system-item" onclick="showPage('keuangan')">💰<span>Accounting</span><small>Kas, piutang & hutang</small></button><button class="work-system-item" onclick="showPage('labarugi')">📊<span>Reports</span><small>Laporan & analisa</small></button><button class="work-system-item" onclick="showPage('mitra')">👥<span>Partner Management</span><small>Mitra, user & tim</small></button></div></div></div>
 <div class="page active" id="page-dashboard">
@@ -885,7 +1026,8 @@ function workTask(icon,title,count,desc,action,label,tone){var cls=tone==='#dc26
 async function loadWorkCenter(){if(!currentProfile||currentRole==='mitra')return;var title=getEl('workCenterTitle'),sub=getEl('workCenterSubtitle'),tasks=getEl('workCenterTasks'),running=getEl('workCenterRunning');if(title)title.textContent='Selamat datang, '+(currentProfile.name||currentProfile.toko_name||currentProfile.username||'Pengguna')+'!';if(sub)sub.textContent=currentRole==='kurir'?'Berikut tugas pengiriman yang menjadi tanggung jawab Anda.':currentRole==='kasir'?'Berikut pekerjaan kasir yang perlu dilakukan sekarang.':'Berikut pekerjaan yang perlu Anda lakukan sekarang.';if(tasks)tasks.innerHTML='<div class="work-empty">⏳ Memeriksa pekerjaan...</div>';if(running)running.innerHTML='';try{var rows=[],runningRows=[];if(['admin','admin_kasir'].includes(currentRole)){var o1=await supabaseClient.from('orders').select('id').eq('status','baru');if(o1.error)throw o1.error;var newOrders=(o1.data||[]).length;if(newOrders)rows.push(workTask('📦','Pesanan perlu dikemas',newOrders,'Pesanan baru menunggu diproses dan dikemas.','showPage(\'orders\')','Kerjakan','#dc2626'));var packed=await supabaseClient.from('orders').select('id').eq('status','dikemas');if(packed.error)throw packed.error;var packedIds=(packed.data||[]).map(function(x){return x.id;});var assignedCount=0;if(packedIds.length){var ds=await supabaseClient.from('deliveries').select('order_id,kurir_id,status').in('order_id',packedIds);if(ds.error)throw ds.error;var by={};(ds.data||[]).forEach(function(d){by[d.order_id]=d;});assignedCount=packedIds.filter(function(id){return !by[id]||!by[id].kurir_id;}).length;}if(assignedCount)rows.push(workTask('🚚','Pengiriman perlu kurir',assignedCount,'Pesanan sudah dikemas dan siap ditugaskan kepada kurir.','showPage(\'pengiriman\')','Kerjakan','#f59e0b'));var po=await supabaseClient.from('purchase_orders').select('id').eq('is_paid',false).eq('received_status','sudah_diterima');if(po.error)throw po.error;var poPay=(po.data||[]).length;if(poPay)rows.push(workTask('💰','PO perlu dibayar',poPay,'Barang sudah diterima dan pembayaran supplier menunggu.','showPage(\'belanja\')','Bayar','#f59e0b'));var poReceive=await supabaseClient.from('purchase_orders').select('id').eq('is_paid',false).eq('received_status','belum_diterima');if(poReceive.error)throw poReceive.error;var poR=(poReceive.data||[]).length;if(poR)runningRows.push('📥 '+poR+' PO masih menunggu barang diterima dari supplier.');var del=await supabaseClient.from('deliveries').select('id,status').in('status',['pending','diambil','dikirim','sampai']);if(del.error)throw del.error;var activeDel=(del.data||[]).length;if(activeDel)runningRows.push('🚚 '+activeDel+' pengiriman sedang berjalan.');}else if(currentRole==='kasir'){rows.push(workTask('🏪','Penjualan Eceran',0,'Siap melayani transaksi penjualan eceran.','showPage(\'eceran\')','Mulai','#27ae60'));var ret=await supabaseClient.from('returns').select('id').eq('status','pending');if(ret.error)throw ret.error;if((ret.data||[]).length)rows.push(workTask('🔄','Retur perlu diperiksa',(ret.data||[]).length,'Ada pengajuan retur yang menunggu pemeriksaan.','showPage(\'retur\')','Lihat','#f59e0b'));var oo=await supabaseClient.from('orders').select('id').in('status',['baru','dikemas','dikirim','sampai']);if(oo.error)throw oo.error;if((oo.data||[]).length)runningRows.push('📋 '+(oo.data||[]).length+' pesanan sedang dalam proses.');}else if(currentRole==='kurir'){var my=await supabaseClient.from('deliveries').select('id,status').eq('kurir_id',currentProfile.id).in('status',['pending','diambil']);if(my.error)throw my.error;var mine=(my.data||[]).length;if(mine)rows.push(workTask('📦','Tugas pengiriman baru',mine,'Ada pengiriman yang menunggu Anda terima/ambil.','showPage(\'kurir-dashboard\')','Lihat Tugas','#dc2626'));var active=await supabaseClient.from('deliveries').select('id,status').eq('kurir_id',currentProfile.id).in('status',['dikirim','sampai']);if(active.error)throw active.error;var activeMine=(active.data||[]).length;if(activeMine)runningRows.push('🚚 '+activeMine+' pengiriman Anda sedang berjalan.');if(!mine&&!activeMine)rows.push(workTask('✅','Tidak ada tugas aktif',0,'Saat ini tidak ada pengiriman yang perlu Anda kerjakan.','showPage(\'resi-kurir\')','Lihat Riwayat','var(--primary)'));}if(tasks)tasks.innerHTML=rows.length?rows.join(''):'<div class="work-empty"><div class="work-empty-icon">✅</div><strong>Semua pekerjaan selesai</strong><span>Tidak ada tindakan yang perlu dilakukan saat ini.</span></div>';if(running)running.innerHTML=runningRows.length?runningRows.map(function(x){return '<div style="padding:8px 10px;border-bottom:1px solid var(--border);font-size:12px;font-weight:600;">'+x+'</div>';}).join(''):'<div class="work-empty" style="padding:10px">Tidak ada pekerjaan yang sedang berjalan.</div>';}catch(e){console.error('loadWorkCenter error:',e);if(tasks)tasks.innerHTML='<div class="work-empty" style="color:#dc2626">❌ Gagal memuat pekerjaan: '+escWork(e.message||e)+'</div>';}}
 function renderRoleFooter(){var f=getEl('appFooterContent');if(!f)return;var items;if(currentRole==='mitra')items=[['🛒','Keranjang','cart'],['📦','Pesanan','orders'],['💬','Chat','chat'],['🔔','Notifikasi','notifikasi']];else if(currentRole==='kurir')items=[['📦','Tugas','kurir-dashboard'],['🧾','Resi','resi-kurir'],['🔔','Notifikasi','notifikasi']];else if(currentRole==='kasir')items=[['🏪','Eceran','eceran'],['📋','Pesanan','orders'],['🔔','Notifikasi','notifikasi']];else items=[['⚡','Pekerjaan','pekerjaan'],['📋','Pesanan','orders'],['🚚','Pengiriman','pengiriman'],['🧾','PO','belanja'],['🏢','Pusat Bisnis','pusat-bisnis'],['📊','Laporan','labarugi']];f.innerHTML='<div class="role-footer">'+items.map(function(x){return '<button class="role-footer-item" onclick="showPage(\''+x[2]+'\')"><span class="rf-icon">'+x[0]+'</span><span>'+x[1]+'</span></button>';}).join('')+'</div>';}
 
-function showPage(id){if(id==='pembayaran'&&!['admin','admin_kasir','kasir'].includes(currentRole)){id=currentRole==='mitra'?'mitra-dashboard':'dashboard';}if(currentRole==='kurir'&&id==='keuangan'){showAppToast('❌ Anda tidak memiliki akses ke halaman Keuangan!');return;}if(['admin','admin_kasir','kasir'].includes(currentRole)&&id==='chat'){id='chat-admin';}if(currentRole==='mitra'&&id==='chat-admin'){id='chat';}document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});var t=getEl('page-'+id);if(t)t.classList.add('active');document.querySelectorAll('.sidebar-menu a').forEach(function(a){a.classList.remove('active');});var f=document.querySelector('.sidebar-menu a[data-page="'+id+'"]');if(f)f.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(id==='dashboard'){var neracaDiv=getEl('dashboardNeracaLabarugi');if(neracaDiv){neracaDiv.style.display=(['admin','admin_kasir'].indexOf(currentRole)!==-1)?'grid':'none';}}if(id==='resi-kurir'&&currentRole==='kurir'){loadResiKurir();}if(id==='resi'){switchResiTab('gudang');}if(id==='audit'){loadAuditTrail();}if(id==='pusat-bisnis'){loadPusatBisnis();}if(id==='pekerjaan'){loadWorkCenter();}if(id==='pembayaran'&&typeof loadPaymentAccounts==='function'){setTimeout(loadPaymentAccounts,100);}if(id==='keuangan'&&typeof renderFinance==='function'){setTimeout(renderFinance,100);}if(id==='checkout'&&typeof ensurePickupField==='function'){setTimeout(ensurePickupField,100);}}
+function toggleDesktopSidebar(open){if(window.innerWidth<=480)return;var sb=getEl('mainSidebar');if(!sb)return;var hidden=!open;sb.classList.toggle('desktop-sidebar-hidden',hidden);var btn=getEl('desktopSidebarToggle');if(btn)btn.style.display=hidden?'inline-flex':'none';var close=getEl('desktopSidebarClose');if(close)close.style.display=hidden?'none':'inline-flex';}
+function showPage(id){if(id==='pembayaran'&&!['admin','admin_kasir','kasir'].includes(currentRole)){id=currentRole==='mitra'?'mitra-dashboard':'dashboard';}if(currentRole==='kurir'&&id==='keuangan'){showAppToast('❌ Anda tidak memiliki akses ke halaman Keuangan!');return;}if(['admin','admin_kasir','kasir'].includes(currentRole)&&id==='chat'){id='chat-admin';}if(currentRole==='mitra'&&id==='chat-admin'){id='chat';}document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active');});var t=getEl('page-'+id);if(t)t.classList.add('active');document.querySelectorAll('.sidebar-menu a').forEach(function(a){a.classList.remove('active');});var f=document.querySelector('.sidebar-menu a[data-page="'+id+'"]');if(f)f.classList.add('active');window.scrollTo({top:0,behavior:'smooth'});if(id==='dashboard'){var neracaDiv=getEl('dashboardNeracaLabarugi');if(neracaDiv){neracaDiv.style.display=(['admin','admin_kasir'].indexOf(currentRole)!==-1)?'grid':'none';}}if(id==='resi-kurir'&&currentRole==='kurir'){loadResiKurir();}if(id==='resi'){switchResiTab('gudang');}if(id==='audit'){loadAuditTrail();}if(id==='pusat-bisnis'){loadPusatBisnis();}if(id==='pekerjaan'){loadWorkCenter();}if(id==='pembayaran'&&typeof loadPaymentAccounts==='function'){setTimeout(loadPaymentAccounts,100);}if(id==='keuangan'&&typeof renderFinance==='function'){setTimeout(renderFinance,100);}if(id==='checkout'&&typeof ensurePickupField==='function'){setTimeout(ensurePickupField,100);}if(window.innerWidth>480)toggleDesktopSidebar(false);}
 
 function searchProducts(query){var term=query.toLowerCase().trim();var items=document.querySelectorAll('#productGrid .product-item, #mitraProductGrid .product-item, #cartMitraProductGrid .product-item, #profilMitraProductGrid .product-item');items.forEach(function(item){var name=item.querySelector('.product-name')?.textContent?.toLowerCase()||'';if(!term||name.includes(term)){item.style.display='flex';}else{item.style.display='none';}});}
 
@@ -1388,7 +1530,7 @@ body{overflow-x:hidden;overflow-y:auto;-webkit-overflow-scrolling:touch;}
       }
     });
   }
-  document.addEventListener('DOMContentLoaded',function(){setTimeout(enforceKasirPaymentReadonly,800);});
+  document.addEventListener('DOMContentLoaded',function(){if(window.innerWidth>480){setTimeout(function(){toggleDesktopSidebar(false);},0);}setTimeout(enforceKasirPaymentReadonly,800);});
 })();
 </script>
 
